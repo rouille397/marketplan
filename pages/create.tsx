@@ -18,7 +18,7 @@ const Create: NextPage = () => {
   // Next JS Router hook to redirect to other pages
   const router = useRouter();
   const networkMismatch = useNetworkMismatch();
-  const [, switchNetwork] = useNetwork();
+  // const [{ data, error, loading }, switchNetwork] = useNetwork();
 
   // Connect to our marketplace contract via the useContract hook
   const { contract: marketplace } = useContract(marketplaceContractAddress, "marketplace");
@@ -27,10 +27,10 @@ const Create: NextPage = () => {
   async function handleCreateListing(e: any) {
     try {
       // Ensure user is on the correct network
-      if (networkMismatch) {
-        switchNetwork && switchNetwork (1030);
-        return;
-      }
+      // if (networkMismatch) {
+      //   switchNetwork && switchNetwork (1030);
+      //   return;
+      // }
 
       // Prevent page from refreshing
       e.preventDefault();
