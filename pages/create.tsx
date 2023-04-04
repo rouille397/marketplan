@@ -1,6 +1,5 @@
 import {
   useContract,
-  useNetwork,
   useNetworkMismatch,
 } from "@thirdweb-dev/react";
 import {
@@ -14,6 +13,9 @@ import { useRouter } from "next/router";
 import { marketplaceContractAddress } from "../addresses";
 import styles from "../styles/Home.module.css";
 
+
+// useActiveChain, useSwitchChain, useChainId
+
 const Create: NextPage = () => {
   // Next JS Router hook to redirect to other pages
   const router = useRouter();
@@ -26,6 +28,7 @@ const Create: NextPage = () => {
   // This function gets called when the form is submitted.
   async function handleCreateListing(e: any) {
     try {
+
       // Ensure user is on the correct network
       // if (networkMismatch) {
       //   switchNetwork && switchNetwork (1030);
