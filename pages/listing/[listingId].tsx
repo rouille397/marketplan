@@ -30,7 +30,7 @@ const ListingPage: NextPage = () => {
 
   // Hooks to detect user is on the right network and switch them if they are not
   const networkMismatch = useNetworkMismatch();
-  const [, switchNetwork] = useNetwork();
+  // const [, switchNetwork] = useNetwork();
 
   // Initialize the marketplace contract
   const { contract } = useContract(marketplaceContractAddress, "marketplace");
@@ -64,10 +64,10 @@ const ListingPage: NextPage = () => {
   async function createBidOrOffer() {
     try {
       // Ensure user is on the correct network
-      if (networkMismatch) {
-        switchNetwork && switchNetwork(ChainId.Goerli);
-        return;
-      }
+      // if (networkMismatch) {
+      //   switchNetwork && switchNetwork(ChainId.Goerli);
+      //   return;
+      // }
 
       // If the listing type is a direct listing, then we can create an offer.
       if (listing?.type === ListingType.Direct) {
@@ -98,10 +98,10 @@ const ListingPage: NextPage = () => {
   async function buyNft() {
     try {
       // Ensure user is on the correct network
-      if (networkMismatch) {
-        switchNetwork && switchNetwork(ChainId.Goerli);
-        return;
-      }
+      // if (networkMismatch) {
+      //   switchNetwork && switchNetwork(ChainId.Goerli);
+      //   return;
+      // }
 
       // Simple one-liner for buying the NFT
       await contract?.buyoutListing(listingId, 1);
