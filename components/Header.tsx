@@ -1,4 +1,10 @@
-import { useAddress, useMetamask, useDisconnect } from "@thirdweb-dev/react";
+import {
+  useAddress,
+  useMetamask,
+  useDisconnect,
+  useActiveChain,
+  useSwitchChain,
+} from "@thirdweb-dev/react";
 import React from "react";
 import styles from "../styles/Home.module.css";
 import Image from "next/image";
@@ -8,7 +14,12 @@ export default function Header() {
   const address = useAddress();
   const connectWithMetamask = useMetamask();
   const disconnectWallet = useDisconnect();
+  const switchChain = useSwitchChain();
 
+
+  const handleConnect = async () => {
+    await connectWithMetamask();
+  };
   return (
     <div className={styles.header}>
       <div className={styles.left}>
@@ -29,10 +40,7 @@ export default function Header() {
             <p>{address.slice(0, 6).concat("...").concat(address.slice(-4))}</p>
           </>
         ) : (
-          <a
-            className={styles.mainButton}
-            onClick={() => connectWithMetamask()}
-          >
+          <a className={styles.mainButton} onClick={handleConnect}>
             Connect Wallet
           </a>
         )}

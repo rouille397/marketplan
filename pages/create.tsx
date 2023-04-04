@@ -1,6 +1,10 @@
 import {
   useContract,
   useNetworkMismatch,
+  useActiveChain,
+  useSwitchChain,
+  useMetamask,
+  useAddress,
 } from "@thirdweb-dev/react";
 import {
   ChainId,
@@ -12,7 +16,8 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { marketplaceContractAddress } from "../addresses";
 import styles from "../styles/Home.module.css";
-
+import { ConfluxEspace } from "@thirdweb-dev/chains";
+import { useEffect } from "react";
 
 // useActiveChain, useSwitchChain, useChainId
 
@@ -21,20 +26,26 @@ const Create: NextPage = () => {
   const router = useRouter();
   const networkMismatch = useNetworkMismatch();
   // const [{ data, error, loading }, switchNetwork] = useNetwork();
-
+  const connectWithMetamask = useMetamask();
   // Connect to our marketplace contract via the useContract hook
-  const { contract: marketplace } = useContract(marketplaceContractAddress, "marketplace");
+  const { contract: marketplace } = useContract(
+    marketplaceContractAddress,
+    "marketplace"
+  );
 
+  const switchChain = useSwitchChain();
+  const address = useAddress();
   // This function gets called when the form is submitted.
+  const chain = useActiveChain();
+
   async function handleCreateListing(e: any) {
     try {
 
-      // Ensure user is on the correct network
-      // if (networkMismatch) {
-      //   switchNetwork && switchNetwork (1030);
-      //   return;
-      // }
+      if (chain?.name !== "Conflux eSpace") {
+        switchChain(ConfluxEspace.chainId);
+      }
 
+      
       // Prevent page from refreshing
       e.preventDefault();
 
@@ -117,6 +128,9 @@ const Create: NextPage = () => {
       console.error(error);
     }
   }
+ 
+   
+
 
   return (
     <form onSubmit={(e) => handleCreateListing(e)}>

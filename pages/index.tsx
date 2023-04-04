@@ -6,7 +6,6 @@ import {
   useActiveListings,
   useActiveChain,
   useSwitchChain,
-  useChainId,
   useMetamask,
   useContract,
   ConnectWallet,
