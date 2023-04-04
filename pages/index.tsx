@@ -42,9 +42,9 @@ const Home: NextPage = () => {
           <Link href="/create" className={styles.mainButton} style={{ textDecoration: "none" }}>
             Create A Listing
           </Link>
-          <Link href="/cancel" className={`${styles.mainButton}`} style={{ textDecoration: "none" }}>
+          {/* <Link href="/cancel" className={`${styles.mainButton}`} style={{ textDecoration: "none" }}>
             Cancel A Listing
-          </Link>
+          </Link> */}
         </div>
 
         <div className="main">

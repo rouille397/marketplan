@@ -1,6 +1,7 @@
 import { useAddress, useMetamask, useDisconnect } from "@thirdweb-dev/react";
 import React from "react";
 import styles from "../styles/Home.module.css";
+import Image from "next/image";
 
 export default function Header() {
   // Helpful thirdweb hooks to connect and manage the wallet from metamask.
@@ -12,7 +13,7 @@ export default function Header() {
     <div className={styles.header}>
       <div className={styles.left}>
         <div>
-          
+          <Image src="/images/logo.png" width={80} height={80} alt="logo" />
         </div>
       </div>
       <div className={styles.right}>

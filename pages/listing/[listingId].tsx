@@ -4,6 +4,8 @@ import {
   useNetworkMismatch,
   useListing,
   useContract,
+  useCancelListing,
+  Web3Button,
 } from "@thirdweb-dev/react";
 import {
   ChainId,
@@ -31,11 +33,20 @@ const ListingPage: NextPage = () => {
   const [, switchNetwork] = useNetwork();
 
   // Initialize the marketplace contract
-  const { contract: marketplace } = useContract(marketplaceContractAddress, "marketplace");
+  const { contract } = useContract(marketplaceContractAddress, "marketplace");
+
+  // const { contract } = useContract(marketplaceContractAddress, "marketplace");
+  console.log(contract, "contract");
+
+  const {
+    mutateAsync: cancelListing,
+    isLoading,
+    error,
+  } = useCancelListing(contract);
 
   // Fetch the listing from the marketplace contract
   const { data: listing, isLoading: loadingListing } = useListing(
-    marketplace,
+    contract,
     listingId
   );
 
@@ -60,7 +71,7 @@ const ListingPage: NextPage = () => {
 
       // If the listing type is a direct listing, then we can create an offer.
       if (listing?.type === ListingType.Direct) {
-        await marketplace?.direct.makeOffer(
+        await contract?.direct.makeOffer(
           listingId, // The listingId of the listing we want to make an offer for
           1, // Quantity = 1
           NATIVE_TOKENS[ChainId.Goerli].wrapped.address, // Wrapped Ether address on Goerli
@@ -70,7 +81,7 @@ const ListingPage: NextPage = () => {
 
       // If the listing type is an auction listing, then we can create a bid.
       if (listing?.type === ListingType.Auction) {
-        await marketplace?.auction.makeBid(listingId, bidAmount);
+        await contract?.auction.makeBid(listingId, bidAmount);
       }
 
       alert(
@@ -93,7 +104,7 @@ const ListingPage: NextPage = () => {
       }
 
       // Simple one-liner for buying the NFT
-      await marketplace?.buyoutListing(listingId, 1);
+      await contract?.buyoutListing(listingId, 1);
       alert("NFT bought successfully!");
     } catch (error) {
       console.error(error);
@@ -172,6 +183,21 @@ const ListingPage: NextPage = () => {
               </button>
             </div>
           </div>
+          {/* Starting the Cancel operation from here */}
+          <div>
+            <Web3Button
+              contractAddress={marketplaceContractAddress}
+              action={() =>
+                cancelListing({
+                  id: listingId,
+                  type: ListingType.Direct, // Direct (0) or Auction (1)
+                })
+              }
+            >
+              Cancel Listing
+            </Web3Button>
+          </div>
+          {/* Ending the cancle operation here */}
         </div>
       </div>
     </div>
