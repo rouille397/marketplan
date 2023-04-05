@@ -4,16 +4,28 @@ import Link from "next/link";
 import {
   MediaRenderer,
   useActiveListings,
+  useActiveChain,
+  useSwitchChain,
+  useMetamask,
   useContract,
+  ConnectWallet,
 } from "@thirdweb-dev/react";
 import { useRouter } from "next/router";
 import { marketplaceContractAddress } from "../addresses";
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const { contract: marketplace } = useContract(marketplaceContractAddress, "marketplace");
-  const { data: listings, isLoading: loadingListings } = useActiveListings(marketplace);
+  const connectWithMetamask = useMetamask();
+  const { contract: marketplace } = useContract(
+    marketplaceContractAddress,
+    "marketplace"
+  );
+  const { data: listings, isLoading: loadingListings } =
+    useActiveListings(marketplace);
 
+  const chain = useActiveChain();
+
+  console.log("chain", chain?.name);
   return (
     <>
       {/* Content */}
@@ -39,15 +51,31 @@ const Home: NextPage = () => {
         <hr className={styles.divider} />
 
         <div style={{ marginTop: 32, marginBottom: 32 }}>
-          <Link href="/create" className={styles.mainButton} style={{ textDecoration: "none" }}>
-            Create A Listing
-          </Link>
+          {chain?.name === undefined ? (
+            <a
+              className={styles.mainButton}
+              onClick={() => connectWithMetamask()}
+            >
+              Connect Wallet
+            </a>
+          ) : (
+            <Link
+              href="/create"
+              className={styles.mainButton}
+              style={{ textDecoration: "none" }}
+            >
+              Create A Listing
+            </Link>
+          )}
+          {/* <Link href="/cancel" className={`${styles.mainButton}`} style={{ textDecoration: "none" }}>
+            Cancel A Listing
+          </Link> */}
         </div>
 
         <div className="main">
           {
             // If the listings are loading, show a loading message
-            loadingListings ? (
+            chain?.name && loadingListings ? (
               <div>Loading listings...</div>
             ) : (
               // Otherwise, show the listings
@@ -68,7 +96,10 @@ const Home: NextPage = () => {
                       }}
                     />
                     <h2 className={styles.nameContainer}>
-                      <Link href={`/listing/${listing.id}`} className={styles.name}>
+                      <Link
+                        href={`/listing/${listing.id}`}
+                        className={styles.name}
+                      >
                         {listing.asset.name}
                       </Link>
                     </h2>
