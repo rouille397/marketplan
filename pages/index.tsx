@@ -37,7 +37,7 @@ const Home: NextPage = () => {
           <b>
             {" "}
             <a
-              href="conflux"
+              href="https://evm.confluxscan.io/address/0x2e4a0d0a0ded36b878fa6bd56a5d537a682e4991"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.purple}
