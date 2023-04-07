@@ -31,21 +31,11 @@ const Home: NextPage = () => {
       {/* Content */}
       <div className={styles.container}>
         {/* Top Section */}
-        <h1 className={styles.h1}>NFT Marketplace</h1>
+        <h1 className={styles.h1}>NITFEE</h1>
         <p className={styles.explain}>
-          NITFEE MARKET{" "}
+         Nitfee is an market place nft based on conflux espace mainnet chain . Buy and sell your favorite collection NFT with the low fees transaction , and earn CFX. {" "}
           <b>
             {" "}
-            <a
-              href="https://evm.confluxscan.io/address/0x2e4a0d0a0ded36b878fa6bd56a5d537a682e4991"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.purple}
-            >
-              CONFLUX ESPACE
-            </a>
-          </b>{" "}
-          to list your favourite nft .
         </p>
 
         <hr className={styles.divider} />
