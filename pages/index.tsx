@@ -36,6 +36,16 @@ const Home: NextPage = () => {
          Nitfee is an market place nft based on conflux espace mainnet chain . Buy and sell your favorite collection NFT with the low fees transaction , and earn CFX. {" "}
           <b>
             {" "}
+            <a
+              href=""
+              target=""
+              rel="noopener noreferrer"
+              className={styles.purple}
+            >
+           
+            </a>
+          </b>{" "}
+          
         </p>
 
         <hr className={styles.divider} />
